@@ -10,22 +10,32 @@ export default function Home() {
 
   return (
     <>
-      <nav>
-        <Link to="/lobby">
-          <button>Host Game</button>
-        </Link>
-      </nav>
+      <div className="min-h-screen bg-purple-700 flex flex-col justify-center items-center">
+        <h1 className="text-white text-9xl font-serif">Kahoot</h1>
+        <nav className="mb-4">
+          <Link to="/lobby">
+            <button className="bg-gray-800 text-white text-lg py-3 px-6 rounded-md">
+              Host Game
+            </button>
+          </Link>
+        </nav>
 
-      <div>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            id="item"
-            value={roomID}
-            onChange={(e) => setroomID(e.target.value)}
-          />
-          <button>Join Room</button>
-        </form>
+        <div className="text-center bg-white px-6 py-6 rounded-md border-2" >
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              id="item"
+              className="mb-4 p-2 rounded-md text-center border-2"
+              value={roomID}
+              onChange={(e) => setroomID(e.target.value)}
+              placeholder="Enter Room ID"
+            />
+            <br />
+            <button className="bg-gray-800 text-white text-lg py-3 px-6 rounded-md">
+              Join Room
+            </button>
+          </form>
+        </div>
       </div>
     </>
   );
