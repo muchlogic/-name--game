@@ -4,16 +4,12 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./routes/Home";
 import Lobby from "./routes/Lobby";
 import Test from "./routes/Test";
-
+import "./index.css";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-  },
-  {
-    path: "/test",
-    element: <Test />,
   },
   {
     path: "/lobby/:roomID",
