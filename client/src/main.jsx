@@ -3,17 +3,27 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./routes/Home";
 import Lobby from "./routes/Lobby";
-import './index.css';
+import Test from "./routes/Test";
+
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
   },
+  {
+    path: "/test",
+    element: <Test />,
+  },
+  {
+    path: "/lobby/:roomID",
+    element: <Lobby />,
+  },
 ]);
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+  <RouterProvider router={router} />
+  // <StrictMode>
+
+  // </StrictMode>
 );
