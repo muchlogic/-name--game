@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <div className="min-h-screen bg-purple-700 flex flex-col justify-center items-center">
-        <h1 className="text-white text-9xl font-serif">Kahoot</h1>
+        <h1 className="text-white text-9xl font-serif">Cawhoot!</h1>
         <nav className="mb-4">
           <Link to="/lobby">
             <button className="bg-gray-800 text-white text-lg py-3 px-6 rounded-md">
