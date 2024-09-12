@@ -1,44 +1,39 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { socket } from "../socket";
+import { useNavigate } from "react-router-dom";
 
 export default function Test() {
   const [roomID, setroomID] = useState("");
   const [players, setPlayers] = useState([]);
 
-  socket.on("room_id", (roomID) => {
-    setroomID(roomID);
-  });
+  const navigate = useNavigate();
 
-  socket.on("room_recieve", (msg) => {
-    console.log(msg);
-  });
+  useEffect(() => {
+    socket.on("room_id", (roomID) => {
+      // setroomID(roomID);
+      navigate(`/lobby/${roomID}`, { state: { roomID: roomID, host: true } });
+    });
+
+    return () => {
+      socket.off("room_id");
+    };
+  }, []);
 
   function handleHost() {
-    socket.emit("create_room", "bob");
-  }
-
-  function sendMsg() {
-    console.log(typeof roomID);
-    socket.emit("room_msg", roomID, "hello I'm sending a message to the room");
+    socket.emit("create_room", "HOST");
   }
 
   function handleJoin() {
-    socket.emit("join_room", roomID, "bill");
-  }
-
-  function handleLeave() {
-    socket.emit("leave_room", roomID);
-    setroomID("");
+    socket.emit("join_room", roomID, "PLAYER");
+    navigate(`/lobby/${roomID}`, { state: { roomID: roomID, host: false } });
   }
 
   return (
     <>
       <nav>
         <button onClick={() => handleHost()}>Host Game</button>
-        <button onClick={() => sendMsg()}>Send Msg</button>
         <button onClick={() => handleJoin()}>Join Room</button>
-        <button onClick={() => handleLeave()}>Leave Room</button>
       </nav>
 
       <div>

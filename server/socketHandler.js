@@ -1,7 +1,7 @@
 const { Server } = require("socket.io");
 
 let io;
-const nicknames = {};
+let nicknames = {};
 
 const initSocket = async (server) => {
   io = new Server(server, {
@@ -23,8 +23,10 @@ const initSocket = async (server) => {
       await socket.join(room_id);
 
       io.to(room_id).emit("room_id", room_id);
-
-      console.log(`${socket.id} joined room ${room_id}`);
+      io.to(room_id).emit(
+        "recieve_room_message",
+        `${nicknames[socket.id]} has joined the party!`
+      );
     });
 
     socket.on("join_room", async (room_id, nickname) => {
@@ -32,13 +34,14 @@ const initSocket = async (server) => {
 
       await socket.join(room_id);
 
-      io.to(room_id).emit("room_recieve", `${nickname} has joined the party!`);
-      console.log(`${socket.id} joined room ${room_id}`);
+      io.to(room_id).emit(
+        "recieve_room_message",
+        `${nicknames[socket.id]} has joined the party!`
+      );
     });
 
-    socket.on("room_msg", (room_id, msg) => {
-      console.log(room_id);
-      io.to(room_id).emit("room_recieve", msg);
+    socket.on("send_room_message", (room_id, msg) => {
+      io.to(room_id).emit("recieve_room_message", msg);
     });
 
     socket.on("leave_room", (room_id) => {
