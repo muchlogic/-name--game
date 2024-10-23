@@ -16,6 +16,9 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// const userRouter = require("./routes/user");
+// app.use("/user", userRouter);
+
 const server = http.createServer(app);
 
 // mount socket io server
