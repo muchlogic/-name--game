@@ -39,6 +39,8 @@ const initSocket = async (server) => {
       const player = new User(nickname);
       let socketID = socket.id;
 
+      console.log(room_id);
+
       let users = rooms.get(room_id);
       users.set(socketID, player);
 
@@ -48,6 +50,15 @@ const initSocket = async (server) => {
         "recieve_room_message",
         `${player.nickname} has joined the party!`
       );
+    });
+
+    socket.on("check-room-exists", (room_id) => {
+      try {
+        const room = rooms.get(room_id);
+        socket.emit("checkedRoom", room == undefined ? false : true);
+      } catch (err) {
+        console.log(err);
+      }
     });
 
     socket.on("send_room_message", (room_id, msg) => {

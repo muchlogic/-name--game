@@ -7,6 +7,7 @@ import "./index.css";
 import Join from "./routes/HomeChildren/Join";
 import HomeDefault from "./routes/HomeChildren/HomeDefault";
 import Host from "./routes/HomeChildren/Host";
+import ErrorPage from "./routes/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -17,10 +18,12 @@ const router = createBrowserRouter([
       { path: "/join", element: <Join /> },
       { path: "/host", element: <Host /> },
     ],
+    errorElement: <ErrorPage />,
   },
   {
     path: "/lobby/:roomID",
     element: <Lobby />,
+    errorElement: <ErrorPage />,
   },
 ]);
 

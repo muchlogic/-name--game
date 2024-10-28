@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { socket } from "../socket";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   Box,
   Container,
@@ -9,21 +9,33 @@ import {
   List,
   TextField,
 } from "@mui/material";
-import { grey } from "@mui/material/colors";
 
 export default function Lobby() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [roundTimer, setRoundTimer] = useState(10);
 
+  const navigate = useNavigate();
   const location = useLocation();
-  const roomID = location.state.roomID;
+  const roomID = location.state ? location.state.roomID : null;
 
   const [players, setPlayers] = useState([]);
 
   const [previousScrollHeight, setPreviousScrollHeight] = useState(0);
 
   useEffect(() => {
+    // if roomID there is no state, ie User did not "join" a lobby,
+    // they are sent home
+    if (!roomID) navigate("/");
+    // const isPageReloaded = sessionStorage.getItem("isReloaded");
+    // if (isPageReloaded) {
+    //   navigate("/"); // return player to home page if refreshed page
+    // } else {
+    //   sessionStorage.setItem("isReloaded", "true");
+    //   if (location.state.host)
+    //     socket.emit("send_room_message", roomID, "HOST IS IN THE PARTY!");
+    //   socket.emit("update_player_list", roomID);
+    // }
     if (location.state.host)
       socket.emit("send_room_message", roomID, "HOST IS IN THE PARTY!");
     socket.emit("update_player_list", roomID);
@@ -56,6 +68,7 @@ export default function Lobby() {
       socket.off("round_timer");
       socket.off("round_over");
       socket.off("updated_player_list");
+      // sessionStorage.removeItem("isReloaded");
     };
   }, []);
 
@@ -158,6 +171,7 @@ export default function Lobby() {
             </List>
             <form onSubmit={(e) => handleMessage(e)}>
               <TextField
+                data-test="input-chatbox"
                 fullWidth
                 size="small"
                 id="outlined-basic"

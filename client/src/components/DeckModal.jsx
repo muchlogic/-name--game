@@ -108,6 +108,7 @@ export default function DeckModal({ deck, index }) {
   return (
     <>
       <li
+        data-test="deck-button"
         onClick={handleOpen}
         key={index}
         className="w-full h-[25vh] flex justify-center items-center bg-[red]"
@@ -124,7 +125,12 @@ export default function DeckModal({ deck, index }) {
             <Typography id="modal-modal-title" variant="h4">
               {deck.name}
             </Typography>
-            <Button variant="contained" color="success" onClick={handleHost}>
+            <Button
+              data-test="play-button"
+              variant="contained"
+              color="success"
+              onClick={handleHost}
+            >
               Play
             </Button>
           </Box>
@@ -154,11 +160,12 @@ export default function DeckModal({ deck, index }) {
                   </ListItemButton>
                   <Collapse in={expand} unmountOnExit>
                     <List disablePadding>
-                      {question.answers.map((answer) => {
+                      {question.answers.map((answer, index) => {
                         return (
                           <>
                             <Divider />
                             <ListItem
+                              key={index}
                               sx={{
                                 display: "flex",
                                 flexDirection: "row",

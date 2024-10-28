@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useFetcher, useLocation, useNavigate } from "react-router-dom";
 import { socket } from "../../socket";
 
 export default function Join() {
   const [nickname, setNickname] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  const roomID = location.state.roomID;
+  const roomID = location.state ? location.state.roomID : null;
+
+  useEffect(() => {
+    if (!roomID) navigate("/");
+  });
 
   function handleJoin() {
     socket.emit("join_room", roomID, nickname);
