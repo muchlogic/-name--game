@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { socket } from "../../socket";
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Alert from "@mui/material/Alert";
 
@@ -48,8 +48,10 @@ export default function HomeDefault() {
           ENTER A VALID ROOM ID
         </Alert>
       </Box>
-
-      <h1 className="text-8xl font-serif py-10">Cawhoot!</h1>
+      <Typography sx={{ fontSize: 40 }} className="py-10">
+        Cawhoot!
+      </Typography>
+      {/* <h1 className="text-8xl font-serif py-10">Cawhoot!</h1> */}
       <div className="text-center bg-white py-4 px-6 rounded-md flex flex-col justify-center items-center shadow-sm shadow-black">
         <form className="flex flex-col">
           <TextField

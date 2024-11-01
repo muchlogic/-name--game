@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "HalfTerm";
+    src: url("../fonts/HalfTermSchoolsOut-V4q5l.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
